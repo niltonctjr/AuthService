@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthService", "src\AuthServ
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthServiceTest", "src\AuthServiceTest\AuthServiceTest.csproj", "{6AD3992D-FC94-4C97-83D7-0440B522BCC1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthService.Migration", "src\AuthService.Migration\AuthService.Migration.csproj", "{D0A4117E-2A6D-4672-A68D-F743E7D70E5E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{6AD3992D-FC94-4C97-83D7-0440B522BCC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6AD3992D-FC94-4C97-83D7-0440B522BCC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6AD3992D-FC94-4C97-83D7-0440B522BCC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0A4117E-2A6D-4672-A68D-F743E7D70E5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0A4117E-2A6D-4672-A68D-F743E7D70E5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0A4117E-2A6D-4672-A68D-F743E7D70E5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0A4117E-2A6D-4672-A68D-F743E7D70E5E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,7 +1,10 @@
 
 
 using AuthService.Models;
+using AuthService.Providers.Cryptography;
 using AuthService.Providers.UniqueIdentify;
+using Newtonsoft.Json.Converters;
+using System.Net.NetworkInformation;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -17,28 +20,14 @@ namespace AuthServiceTest
         [Test]
         public void Run()
         {
-            using MD5 md5Hash = MD5.Create();
-            byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes("senha123senha123senha123senha123"));
-            StringBuilder sBuilder = new StringBuilder();
-
-            for (int i = 0; i < data.Length; i++)
-            {
-                sBuilder.Append(data[i].ToString("x2"));
-            }
-
-            data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(sBuilder.ToString()));
-            sBuilder.Clear();
-            for (int i = 0; i < data.Length; i++)
-            {
-                sBuilder.Append(data[i].ToString("x3"));
-            }
-
-            var uidProvider = new UniqueIdentifyProvider();
+            var crypto = new CryptographyProvider();
             var admin = new UserModel()
             {
                 Email = "admin@authservice.com",
-                Password = sBuilder.ToString(),
+                Password = crypto.Encryp("senha123")
             };
+
+            var mac = new UniqueIdentifyProvider().GetMac(admin.Id);
 
             Assert.Pass();
         }

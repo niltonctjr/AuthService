@@ -2,7 +2,7 @@
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 
-namespace AuthService.Middlewares
+namespace AuthService.Extensions
 {
     public static class HealthChecksExtension
     {
