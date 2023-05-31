@@ -7,7 +7,7 @@ namespace AuthService.Repositories.Mappers
         where T : BaseModel
     {
         public BaseMap()
-        {
+        {            
             Map(e => e.Id).ToColumn("id");
             Map(e => e.State).ToColumn("state");
             Map(e => e.CreatedAt).ToColumn("created_at");

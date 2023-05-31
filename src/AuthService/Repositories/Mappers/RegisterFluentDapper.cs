@@ -1,4 +1,5 @@
 ﻿using Dapper.FluentMap;
+using static Org.BouncyCastle.Math.EC.ECCurve;
 
 namespace AuthService.Repositories.Mappers
 {
@@ -8,8 +9,8 @@ namespace AuthService.Repositories.Mappers
         {
             FluentMapper.EntityMaps.Clear();
             FluentMapper.Initialize(c => {
-                c.AddMap(new UserMap());
-            });
+                c.AddMap(new UserMap());                
+            });            
         }
     }
 }
