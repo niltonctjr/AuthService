@@ -6,19 +6,19 @@ Partindo deste ponto esta aplicação é um serviço de autenticação e autoriz
 
 ---
 ### 🛠️ Lista de ToDo: 
-* [X] Use case de sign-up;
-* [ ] Use case de sign-in;
-* [ ] Action de sign-up;
-* [ ] Action de sign-in;
-* [ ] Envio de e-email em processo de sign-up;
-* [ ] Tabela de sessão;
+* ☑️ Use case de sign-up;
+* ❎ Use case de sign-in;
+* ❎ Action de sign-up;
+* ❎ Action de sign-in;
+* ❎ Envio de e-email em processo de sign-up;
+* ❎ Tabela de sessão;
 
 ---
 ### 💾 Esta aplicação suporta ser acomplada as base de dados:
 * [X] SqlServer
-* [ ] PostgrSql
-* [ ] mySql
-* [ ] Oracle
+* ❎ PostgrSql
+* ❎ mySql
+* ❎ Oracle
 ---
 ### 🔌 Lista atual de dependencias:
 * AspNetCore.HealthChecks.SqlServer;
