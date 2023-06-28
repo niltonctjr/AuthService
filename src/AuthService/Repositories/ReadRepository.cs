@@ -1,11 +1,21 @@
-﻿using Dapper;
-using AuthService.Models;
+﻿using AuthService.Models;
 using AuthService.Repositories.Contexts;
 using System.Data;
+using Dommel;
+using System.Linq.Expressions;
+using Dapper;
+using Microsoft.VisualBasic;
+using System;
 
 namespace AuthService.Repositories
 {
-    public abstract class ReadRepository<T>
+    public interface IReadRepository<T> where T : BaseModel
+    {
+        T? Get(Guid id);
+        IEnumerable<T> GetAll(Expression<Func<T, bool>>? predicate = null);
+    }
+
+    public abstract class ReadRepository<T> : IReadRepository<T>
         where T : BaseModel
     {
         protected readonly IBaseContext _ctx;
@@ -21,22 +31,18 @@ namespace AuthService.Repositories
             }
         }
         
-        public virtual Task<T> Get(Guid id) => OpenConnection(conn => 
-            conn.QueryFirstAsync<T>($"{SqlConsult()} where [id] = @id", new { id })
-        );
-
-        public virtual Task<T> GetAll(string? where = null, object? param = null) => OpenConnection(conn => {
-
-            if (where != null && param != null)
-            {
-                var sql = $"{SqlConsult()} where {where}";
-                return conn.QueryFirstAsync<T>(sql, param);
-            }
-            return conn.QueryFirstAsync<T>(SqlConsult());
-
+        public virtual T? Get(Guid id) => OpenConnection(conn => {
+            return conn.Get<T>(id);
+            //return conn.Select<T>(x=> x.Id == id).First();
         });
 
+        public virtual IEnumerable<T> GetAll(Expression<Func<T, bool>>? predicate = null) => OpenConnection(conn => {
 
-        public abstract string SqlConsult();
+            if (predicate == null)
+                return conn.GetAll<T>();
+
+            return conn.Select<T>(predicate);
+
+        });
     }
 }

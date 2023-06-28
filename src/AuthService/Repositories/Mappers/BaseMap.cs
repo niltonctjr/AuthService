@@ -1,14 +1,14 @@
 ﻿using AuthService.Models;
-using Dapper.FluentMap.Mapping;
+using Dapper.FluentMap.Dommel.Mapping;
 
 namespace AuthService.Repositories.Mappers
 {
-    public abstract class BaseMap<T> : EntityMap<T>
+    public abstract class BaseMap<T> : DommelEntityMap<T>
         where T : BaseModel
     {
         public BaseMap()
-        {            
-            Map(e => e.Id).ToColumn("id");
+        {
+            Map(e => e.Id).ToColumn("id").IsKey();
             Map(e => e.State).ToColumn("state");
             Map(e => e.CreatedAt).ToColumn("created_at");
             Map(e => e.ModifiedAt).ToColumn("modified_at");

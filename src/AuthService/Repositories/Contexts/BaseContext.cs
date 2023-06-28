@@ -12,19 +12,23 @@ namespace AuthService.Repositories.Contexts
     public abstract class BaseContext<T> : IBaseContext
         where T : IDbConnection
     {
-        private readonly IDbConnection _conn;
+        private IDbConnection _conn;
+        private readonly string _stringConn;
 
         public BaseContext(string? connectionString)
         {
             if (connectionString == null) throw new Exception("String de conexão não informada");
-
-            _conn = Activator.CreateInstance<T>();
-            _conn.ConnectionString = connectionString;            
+            _stringConn = connectionString;
         }
+
         public IDbConnection Open() 
         {
-            if (_conn.State != ConnectionState.Open) 
+            if (_conn == null || _conn.State != ConnectionState.Open) 
+            {
+                _conn = Activator.CreateInstance<T>();
+                _conn.ConnectionString = _stringConn;
                 _conn.Open();
+            }
             return _conn;
         }
         public void Dispose()

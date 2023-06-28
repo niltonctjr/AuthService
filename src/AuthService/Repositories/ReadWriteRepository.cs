@@ -1,41 +1,53 @@
-﻿using Dapper;
+﻿using Dommel;
 using AuthService.Models;
 using AuthService.Models.Enums;
 using AuthService.Repositories.Contexts;
-using System.Data;
+using AuthService.Repositories.Customs.Dommel;
 
 namespace AuthService.Repositories
 {
-    public abstract class ReadWriteRepository<T> : ReadRepository<T>
+    public interface IReadWriteRepository<T> : IReadRepository<T>
+        where T : BaseModel
+    {
+        void Create(T model);
+        void Alter(T model);
+        void Delete(Guid id);
+        void Disable(Guid id);
+        void Enable(Guid id);
+    }
+    public abstract class ReadWriteRepository<T> : ReadRepository<T>, IReadWriteRepository<T>
         where T : BaseModel
     {
         protected ReadWriteRepository(IBaseContext ctx) : base(ctx)
         {
         }
 
-        private Task ChangeState(StateGeneric state, Guid id) => OpenConnection(conn =>
-            conn.ExecuteAsync(SqlChangeState(), new
-            {
-                state,
-                id
-            })
-        );
+        private void ChangeState(StateGeneric state, Guid id)
+        {
+            var model = Get(id);
+            if (model == null)
+                throw new Exception($"Não encontrado registro do tipo {typeof(T).FullName} com id {id}");
 
-        public virtual Task Create(T model) => OpenConnection(conn =>
-            conn.ExecuteAsync(SqlInsert(), model)
-        );
-        public virtual Task Alter(T model) => OpenConnection(conn =>
-            conn.ExecuteAsync(SqlUpdate(), model)
-        );
-        public virtual Task Delete(Guid id) => OpenConnection(conn =>
-            conn.ExecuteAsync(SqlDelete(), new { id })
-        );     
-        public virtual Task Disable(Guid id) => ChangeState(StateGeneric.Inactive, id);
-        public virtual Task Enable(Guid id) => ChangeState(StateGeneric.Active, id);        
+            model.State = state;
+            Alter(model);
+        }
 
-        public abstract string SqlInsert();
-        public abstract string SqlUpdate();
-        public abstract string SqlDelete();
-        public abstract string SqlChangeState();
+        public virtual void Create(T model) => OpenConnection(conn =>
+            conn.InsertCustom(model));
+        public virtual void Alter(T model) => OpenConnection(conn =>
+        {
+            return conn.Update(model);
+        });
+        public virtual void Delete(Guid id)
+        {
+            var model = Get(id);
+            if (model == null)
+                throw new Exception($"Não encontrado registro do tipo {typeof(T).FullName} com id {id}");
+
+            OpenConnection(conn => conn.Delete(model));
+        }
+        public virtual void Disable(Guid id) => ChangeState(StateGeneric.Inactive, id);
+        public virtual void Enable(Guid id) => ChangeState(StateGeneric.Active, id);        
+
     }
 }

@@ -1,14 +1,14 @@
 ﻿using AuthService.Models.Enums;
 using AuthService.Providers.UniqueIdentify;
+using AuthService.Repositories;
 using System;
 
 namespace AuthService.Models
 {
     public abstract class BaseModel
     {
-        private readonly UniqueIdentifyProvider _uid;
-        private readonly Guid _id;
-        public Guid Id => _id;
+        private readonly UniqueIdentifyProvider _uid;        
+        public Guid Id { get; set; }
         public StateGeneric State { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime? ModifiedAt { get; set; }
@@ -20,17 +20,15 @@ namespace AuthService.Models
         public BaseModel(Guid id)
         {
             _uid = new UniqueIdentifyProvider();
-            _id = id;
+            Id = id;
             CreatedAt = _uid.GetDate(Id);            
         }
         public BaseModel()
         {
             _uid = new UniqueIdentifyProvider();
-            _id = _uid.getUID();
+            Id = _uid.getUID();
             CreatedAt = _uid.GetDate(Id);
             State = Models.Enums.StateGeneric.Active;
         }
-
-        public abstract void LazyLoading();
     }
 }
