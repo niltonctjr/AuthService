@@ -22,7 +22,7 @@ namespace AuthService.Providers.UniqueIdentify
             var bDate = BitConverter.GetBytes(date.Ticks);                        
             var bRand = BitConverter.GetBytes(rand);            
 
-            var bytes = bDate //8bytes                
+            var bytes = bDate //8bytes
                 .Concat(mac) //6bytes
                 .Concat(bRand) //2bytes
                 .ToArray();
