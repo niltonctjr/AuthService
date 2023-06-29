@@ -1,6 +1,6 @@
 ﻿using AuthService.Domain.Models;
 using AuthService.Domain.Models.Enums;
-using AuthService.Providers.Cryptography;
+using AuthService.Domain.Utils.Cryptography;
 using AuthService.Repositories;
 using AuthService.Repositories.Contexts;
 using AuthServiceTest.UseCase;
@@ -39,9 +39,8 @@ namespace AuthServiceTest.Repositories
         [Test]
         [Order(1)]
         public void Create() 
-        {
-            var encryp = new CryptographyProvider();
-            var encrypPass = encryp.Encryp("123");
+        {            
+            var encrypPass = "123".Encryp();
 
             var model = new UserModel(){
                 Email = _username,
@@ -58,8 +57,7 @@ namespace AuthServiceTest.Repositories
         [Order(2)]
         public void Update()
         {
-            var encryp = new CryptographyProvider();
-            var encrypPass = encryp.Encryp("1234");
+            var encrypPass = "1234".Encryp();
 
             var old = _rep.GetAll().Last();
             old.Password = encrypPass;

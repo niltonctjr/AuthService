@@ -1,6 +1,4 @@
-﻿using AuthService.Providers.Cryptography;
-using AuthService.Providers.UniqueIdentify;
-using AuthService.Repositories;
+﻿using AuthService.Repositories;
 using AuthService.Repositories.Interface;
 
 namespace AuthService.Extensions
@@ -11,8 +9,6 @@ namespace AuthService.Extensions
         {
             #region providers
 
-            services.AddTransient<CryptographyProvider>();
-            services.AddTransient<UniqueIdentifyProvider>();
 
             #endregion
 

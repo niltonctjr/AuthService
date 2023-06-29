@@ -1,5 +1,5 @@
 ﻿using AuthService.Domain.Models;
-using AuthService.Providers.Cryptography;
+using AuthService.Domain.Utils.Cryptography;
 using AuthService.Repositories.Interface;
 using System.ComponentModel;
 
@@ -33,9 +33,8 @@ namespace AuthService.UseCases
         }
 
         public override Task<dynamic> Run(Actor actor, SignUpDto dto)
-        {
-            var encryp = new CryptographyProvider();
-            var encrypPass = encryp.Encryp(dto.Password);
+        {            
+            var encrypPass = dto.Password.Encryp();
 
             var model = new UserModel() {
                 Email = dto.Email,
