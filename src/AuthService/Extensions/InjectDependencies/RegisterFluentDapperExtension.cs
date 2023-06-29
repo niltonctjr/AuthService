@@ -1,6 +1,6 @@
 ﻿using AuthService.Repositories.Mappers;
 
-namespace AuthService.Extensions
+namespace AuthService.Extensions.InjectDependencies
 {
     public static class RegisterFluentDapperExtension
     {

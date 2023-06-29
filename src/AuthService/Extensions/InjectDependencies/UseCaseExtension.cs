@@ -3,7 +3,7 @@ using AuthService.Repositories.Migrations;
 using AuthService.Repositories;
 using AuthService.UseCases;
 
-namespace AuthService.Extensions
+namespace AuthService.Extensions.InjectDependencies
 {
     public static class UseCaseExtension
     {

@@ -1,16 +1,16 @@
-﻿
-using HealthChecks.UI.Client;
+﻿using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 
-namespace AuthService.Extensions
+namespace AuthService.Extensions.InjectDependencies
 {
     public static class HealthChecksExtension
     {
         public static IServiceCollection AddHealth(this IServiceCollection services, ConfigurationManager configuration)
         {
+
             services.AddHealthChecks()
-                .AddSqlServer(configuration.GetConnectionString("Tests"),
-                    name: "DataBase Tests", tags: new string[] { "db", "data", "sql" });
+                .AddSqlServer($"{configuration.GetConnectionString("AuthService")}",
+                    name: "DataBase AuthService", tags: new string[] { "db", "data", "sql" });
 
             services.AddHealthChecksUI(options =>
             {

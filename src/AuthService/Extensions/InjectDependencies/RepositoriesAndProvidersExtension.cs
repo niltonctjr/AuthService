@@ -1,7 +1,7 @@
 ﻿using AuthService.Repositories;
 using AuthService.Repositories.Interface;
 
-namespace AuthService.Extensions
+namespace AuthService.Extensions.InjectDependencies
 {
     public static class RepositoriesAndProvidersExtension
     {

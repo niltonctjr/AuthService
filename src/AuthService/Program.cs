@@ -1,27 +1,28 @@
-using AuthService.Extensions;
 using Microsoft.OpenApi.Models;
 using NLog;
 using NLog.Web;
 using AuthService.Migration.Extensions;
+using AuthService.Extensions.InjectDependencies;
 
-var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
+var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 logger.Debug("init main");
 try
 {
 
     var builder = WebApplication.CreateBuilder(args);
 
-    builder.Services.AddControllers();
-    builder.Services.AddEndpointsApiExplorer();
-
-    builder.Services.AddHealth(builder.Configuration);
+    builder.Services
+        .AddSetting(builder.Configuration)
+        .AddJWTBearer(builder.Configuration)
+        .AddMigration(builder.Configuration)
+        .AddHealth(builder.Configuration)
+        .AddEndpointsApiExplorer()
+        .AddControllers();
 
     builder.Services.AddSwaggerGen(c =>
     {
         c.SwaggerDoc("v1", new OpenApiInfo { Title = "HealthCheck", Version = "v1" });
     });
-
-    builder.Services.AddMigration(builder.Configuration);
 
     builder.Host.ConfigureLogging(logging => {
         logging.ClearProviders();
@@ -33,18 +34,15 @@ try
 
     if (app.Environment.IsDevelopment())
     {
-        app.UseSwagger();
-        app.UseSwaggerUI();
+        app.UseSwagger()
+           .UseSwaggerUI();
     }
 
-    app.UseHttpsRedirection();
-
-    app.UseAuthorization();
+    app.UseHttpsRedirection()
+       .UseAuthorization()
+       .UseHealth();
 
     app.MapControllers();
-
-    app.UseHealth();
-
     app.MigrateDatabase(logger);
 
     app.Run();
@@ -56,5 +54,5 @@ catch (Exception exception)
 }
 finally
 {
-    NLog.LogManager.Shutdown();
+    LogManager.Shutdown();
 }
