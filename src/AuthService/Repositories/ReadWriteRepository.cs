@@ -1,8 +1,9 @@
 ﻿using Dommel;
-using AuthService.Models;
-using AuthService.Models.Enums;
+using AuthService.Domain.Models;
+using AuthService.Domain.Models.Enums;
 using AuthService.Repositories.Contexts;
 using AuthService.Repositories.Customs.Dommel;
+using AuthService.Domain.Models;
 
 namespace AuthService.Repositories
 {

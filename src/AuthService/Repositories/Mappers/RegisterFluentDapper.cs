@@ -7,6 +7,12 @@ namespace AuthService.Repositories.Mappers
 {
     public class RegisterFluentDapper
     {
+        private readonly ILogger<RegisterFluentDapper> _logger;
+        public RegisterFluentDapper(ILogger<RegisterFluentDapper> logger)
+        {
+            _logger = logger;
+        }
+
         public void Register()
         {
             FluentMapper.EntityMaps.Clear();
@@ -15,14 +21,9 @@ namespace AuthService.Repositories.Mappers
                 c.ForDommel();
             });
 
-            DommelMapper.LogReceived = msg =>
-            {
-                Console.WriteLine(msg);
-            };
+            DommelMapper.LogReceived = msg => _logger.LogInformation(msg);
+            DommelMapperCustom.KeyNotIdentity = true;
             DommelMapper.SetPropertyResolver(new CustomPropertyResolver());
-            DommelMapper.SetTableNameResolver(new Dapper.FluentMap.Dommel.Resolvers.DommelTableNameResolver());
-            DommelMapper.SetColumnNameResolver(new Dapper.FluentMap.Dommel.Resolvers.DommelColumnNameResolver());
-            DommelMapper.SetKeyPropertyResolver(new Dapper.FluentMap.Dommel.Resolvers.DommelKeyPropertyResolver());
         }
     }
 }

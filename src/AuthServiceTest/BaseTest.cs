@@ -1,6 +1,7 @@
 ﻿using AuthService.Repositories.Mappers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using NLog.Extensions.Logging;
 
 namespace AuthServiceTest.UseCase
 {
@@ -18,7 +19,8 @@ namespace AuthServiceTest.UseCase
             _config = builder.Build();
 
             var services = new ServiceCollection();
-            services.AddScoped<RegisterFluentDapper>();            
+            services.AddScoped<RegisterFluentDapper>();
+            services.AddLogging(loggingBuilder => loggingBuilder.AddNLog("nlog.config"));
             var provider = services.BuildServiceProvider();
 
 

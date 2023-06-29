@@ -28,4 +28,9 @@
     <Folder Include="Controllers\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\AuthService.Domain\AuthService.Domain.csproj" />
+    <ProjectReference Include="..\AuthService.Migration\AuthService.Migration.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,16 +1,19 @@
-﻿using FluentMigrator;
-using FluentMigrator.Runner;
-using Microsoft.AspNetCore.Hosting;
+﻿using FluentMigrator.Runner;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using System.Reflection;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using NLog;
 
-namespace AuthService.Extensions
+namespace AuthService.Migration.Extensions
 {
     public static class MigrationExtension
     {
         public static IServiceCollection AddMigration(this IServiceCollection services, IConfiguration configuration) 
         {
             var assembly = Assembly.GetExecutingAssembly().GetTypes()
-                .Where(t=> typeof(Migration) == t.BaseType)
+                .Where(t=> typeof(FluentMigrator.Migration) == t.BaseType)
                 .Select(t=> t.Assembly).ToArray();
 
             services.AddFluentMigratorCore()
@@ -24,7 +27,7 @@ namespace AuthService.Extensions
             return services;
         }
 
-        public static IHost MigrateDatabase(this IHost host)
+        public static IHost MigrateDatabase(this IHost host, Logger logger)
         {
             using (var scope = host.Services.CreateScope())
             {
@@ -36,7 +39,7 @@ namespace AuthService.Extensions
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e.Message);
+                    logger.Error(e, e.Message);
                     throw;
                 }
             }

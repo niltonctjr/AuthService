@@ -1,6 +1,5 @@
-﻿using AuthService.Repositories;
-
-namespace AuthService.Models
+﻿
+namespace AuthService.Domain.Models
 {
     public class UserModel : BaseModel
     {

@@ -7,7 +7,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthService", "src\AuthServ
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthServiceTest", "src\AuthServiceTest\AuthServiceTest.csproj", "{6AD3992D-FC94-4C97-83D7-0440B522BCC1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthService.Migration", "src\AuthService.Migration\AuthService.Migration.csproj", "{D0A4117E-2A6D-4672-A68D-F743E7D70E5E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthService.Migration", "src\AuthService.Migration\AuthService.Migration.csproj", "{D0A4117E-2A6D-4672-A68D-F743E7D70E5E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthService.Domain", "src\AuthService.Domain\AuthService.Domain.csproj", "{E2BE17C6-7F79-4C3C-A336-BD37682B27CF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{ED2C5374-9279-4126-820B-A687482FB16E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{90193864-47CC-433A-A92C-23DE459559D1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,9 +33,19 @@ Global
 		{D0A4117E-2A6D-4672-A68D-F743E7D70E5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0A4117E-2A6D-4672-A68D-F743E7D70E5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0A4117E-2A6D-4672-A68D-F743E7D70E5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2BE17C6-7F79-4C3C-A336-BD37682B27CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2BE17C6-7F79-4C3C-A336-BD37682B27CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2BE17C6-7F79-4C3C-A336-BD37682B27CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2BE17C6-7F79-4C3C-A336-BD37682B27CF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{873DC966-55AE-43DB-A69D-3FD4C90DE5F8} = {ED2C5374-9279-4126-820B-A687482FB16E}
+		{6AD3992D-FC94-4C97-83D7-0440B522BCC1} = {90193864-47CC-433A-A92C-23DE459559D1}
+		{D0A4117E-2A6D-4672-A68D-F743E7D70E5E} = {ED2C5374-9279-4126-820B-A687482FB16E}
+		{E2BE17C6-7F79-4C3C-A336-BD37682B27CF} = {ED2C5374-9279-4126-820B-A687482FB16E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B26A2FEC-2884-4D2A-BCA5-57D17857D826}

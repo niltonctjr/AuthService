@@ -1,4 +1,4 @@
-﻿namespace AuthService.Models.Enums
+﻿namespace AuthService.Domain.Models.Enums
 {
     public enum StateGeneric
     {

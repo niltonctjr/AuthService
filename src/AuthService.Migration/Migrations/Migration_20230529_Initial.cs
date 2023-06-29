@@ -1,14 +1,10 @@
-﻿using AuthService.Models;
-using AuthService.Providers.Cryptography;
-using AuthService.Providers.UniqueIdentify;
-using FluentMigrator;
-using System.Security.Cryptography;
-using System.Text;
+﻿using AuthService.Domain.Models;
+using AuthService.Domain.Utils.Cryptography;
 
 namespace AuthService.Repositories.Migrations
 {
-    [Migration(20230529)]
-    public class Migration_20230529_Initial : Migration
+    [FluentMigrator.Migration(20230529)]
+    public class Migration_20230529_Initial : FluentMigrator.Migration
     {
         public override void Down()
         {
@@ -40,11 +36,10 @@ namespace AuthService.Repositories.Migrations
         }
 
         private void CreateAdminUser()
-        {
-            var cryp = new CryptographyProvider();
+        {            
             var admin = new UserModel() {
                 Email = "admin@authservice.com",
-                Password = cryp.Encryp("senha123")
+                Password = "senha123".Encryp()
             };            
 
             Insert.IntoTable("users").Row(new

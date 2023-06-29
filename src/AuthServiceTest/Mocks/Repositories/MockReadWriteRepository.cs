@@ -1,4 +1,4 @@
-﻿using AuthService.Models;
+﻿using AuthService.Domain.Models;
 using AuthService.Repositories;
 using System;
 using System.Collections.Generic;
@@ -23,11 +23,11 @@ namespace AuthServiceTest.Mocks.Repositories
 
         public void Delete(Guid id) => MemoryStorage.Remove(Get(id));
 
-        public void Disable(Guid id) => ChangeState(AuthService.Models.Enums.StateGeneric.Inactive, id);
+        public void Disable(Guid id) => ChangeState(AuthService.Domain.Models.Enums.StateGeneric.Inactive, id);
 
-        public void Enable(Guid id) => ChangeState(AuthService.Models.Enums.StateGeneric.Active, id);
+        public void Enable(Guid id) => ChangeState(AuthService.Domain.Models.Enums.StateGeneric.Active, id);
 
-        private void ChangeState(AuthService.Models.Enums.StateGeneric state, Guid id)
+        private void ChangeState(AuthService.Domain.Models.Enums.StateGeneric state, Guid id)
         {
             var model = Get(id);
             model.State = state;

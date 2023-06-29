@@ -1,10 +1,8 @@
 using AuthService.Extensions;
-using HealthChecks.UI.Client;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using Microsoft.Identity.Client;
 using Microsoft.OpenApi.Models;
 using NLog;
 using NLog.Web;
+using AuthService.Migration.Extensions;
 
 var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 logger.Debug("init main");
@@ -47,7 +45,7 @@ try
 
     app.UseHealth();
 
-    app.MigrateDatabase();
+    app.MigrateDatabase(logger);
 
     app.Run();
 }

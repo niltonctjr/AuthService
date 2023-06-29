@@ -1,4 +1,4 @@
-﻿using AuthService.Models;
+﻿using AuthService.Domain.Models;
 using Dapper.FluentMap.Mapping;
 
 namespace AuthService.Repositories.Mappers

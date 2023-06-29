@@ -2,7 +2,6 @@
 using AuthService.Providers.UniqueIdentify;
 using AuthService.Repositories;
 using AuthService.Repositories.Interface;
-using AuthService.Repositories.Migrations;
 
 namespace AuthService.Extensions
 {

@@ -1,4 +1,4 @@
-﻿using AuthService.Models;
+﻿using AuthService.Domain.Models;
 using AuthService.Repositories;
 using System;
 using System.Collections.Generic;

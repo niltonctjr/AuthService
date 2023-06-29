@@ -1,4 +1,4 @@
-﻿using AuthService.Models;
+﻿using AuthService.Domain.Models;
 using AuthService.Repositories.Contexts;
 using System.Data;
 using Dommel;
@@ -6,6 +6,7 @@ using System.Linq.Expressions;
 using Dapper;
 using Microsoft.VisualBasic;
 using System;
+using AuthService.Domain.Models;
 
 namespace AuthService.Repositories
 {
@@ -31,10 +32,7 @@ namespace AuthService.Repositories
             }
         }
         
-        public virtual T? Get(Guid id) => OpenConnection(conn => {
-            return conn.Get<T>(id);
-            //return conn.Select<T>(x=> x.Id == id).First();
-        });
+        public virtual T? Get(Guid id) => OpenConnection(conn => conn.Get<T>(id));
 
         public virtual IEnumerable<T> GetAll(Expression<Func<T, bool>>? predicate = null) => OpenConnection(conn => {
 

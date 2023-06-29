@@ -1,7 +1,7 @@
-﻿using AuthService.Models;
+﻿using AuthService.Domain.Models;
 using AuthService.Repositories.Interface;
 
-namespace AuthService.Repositories.Migrations
+namespace AuthService.Repositories
 {
     public class LazyLoadingRepository
     {
@@ -11,7 +11,7 @@ namespace AuthService.Repositories.Migrations
             _userRep = userRep;
         }
 
-        public void LoadCreateModified<T>(ref T model) where T : BaseModel 
+        public void LoadCreateModified<T>(ref T model) where T : BaseModel
         {
             var createUser = _userRep.Get(model.CreatedById);
             createUser.Password = "";
@@ -23,7 +23,7 @@ namespace AuthService.Repositories.Migrations
                 modifyUser.Password = "";
                 model.ModifiedBy = modifyUser;
             }
-                
+
         }
     }
 }

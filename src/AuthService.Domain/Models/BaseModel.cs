@@ -1,9 +1,7 @@
-﻿using AuthService.Models.Enums;
-using AuthService.Providers.UniqueIdentify;
-using AuthService.Repositories;
-using System;
+﻿using AuthService.Domain.Utils.UniqueIdentify;
+using AuthService.Domain.Models.Enums;
 
-namespace AuthService.Models
+namespace AuthService.Domain.Models
 {
     public abstract class BaseModel
     {

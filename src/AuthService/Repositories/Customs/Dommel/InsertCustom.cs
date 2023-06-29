@@ -15,18 +15,23 @@ namespace AuthService.Repositories.Customs.Dommel
         }
 
         internal static string BuildInsertQuery(ISqlBuilder sqlBuilder, Type type)
-        {
+        {            
             var cacheKey = new QueryCacheKey(QueryCacheType.Insert, sqlBuilder, type);
             if (!QueryCache.TryGetValue(cacheKey, out var sql))
             {
                 var tableName = Resolvers.Table(type, sqlBuilder);
 
-                // Use all non-identity and non-generated properties for inserts                
-                var identityProperties = ResolversCustom.IdentityProperties(type);
+                IEnumerable<ColumnPropertyInfo> exceptProperties;
+                if (!KeyNotIdentity)
+                    exceptProperties = Resolvers.KeyProperties(type);                
+                else
+                    exceptProperties = ResolversCustom.IdentityProperties(type);
+
+                // Use all non-identity and non-generated properties for inserts       
                 var typeProperties = Resolvers.Properties(type)
                     .Where(x => !x.IsGenerated)
                     .Select(x => x.Property)
-                    .Except(identityProperties.Where(p => p.IsGenerated).Select(p => p.Property));
+                    .Except(exceptProperties.Where(p => p.IsGenerated).Select(p => p.Property));
 
                 var columnNames = typeProperties.Select(p => Resolvers.Column(p, sqlBuilder, false)).ToArray();                
                 var paramNames = typeProperties.Select(p => sqlBuilder.PrefixParameter(p.Name)).ToArray();

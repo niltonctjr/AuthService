@@ -1,4 +1,4 @@
-﻿using AuthService.Models;
+﻿using AuthService.Domain.Models;
 using AuthService.Providers.Cryptography;
 using AuthService.Repositories.Interface;
 using System.ComponentModel;
