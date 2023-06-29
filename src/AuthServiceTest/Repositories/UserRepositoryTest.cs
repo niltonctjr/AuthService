@@ -67,7 +67,7 @@ namespace AuthServiceTest.Repositories
             _rep.Alter(old);
             var result = _rep.Get(old.Id);
 
-            Assert.AreEqual(encrypPass, result.Password);
+            Assert.That(result?.Password, Is.EqualTo(encrypPass));
             
         }
         [Test]
@@ -78,7 +78,7 @@ namespace AuthServiceTest.Repositories
             _rep.Disable(old.Id);
             var result = _rep.Get(old.Id);
 
-            Assert.AreEqual(StateGeneric.Inactive, result.State);
+            Assert.That(result?.State, Is.EqualTo(StateGeneric.Inactive));
         }
         [Test]
         [Order(2)]
@@ -88,7 +88,7 @@ namespace AuthServiceTest.Repositories
             _rep.Enable(old.Id);
             var result = _rep.Get(old.Id);
 
-            Assert.AreEqual(StateGeneric.Active, result.State);
+            Assert.That(result?.State, Is.EqualTo(StateGeneric.Active));
         }
 
         [Test]
@@ -100,7 +100,7 @@ namespace AuthServiceTest.Repositories
             if(result!= null && result.Any())
                 _idAdmin = result.First().Id;
 
-            Assert.IsNotEmpty(result);
+            Assert.That(result, Is.Not.Empty);
         }
 
         [Test]
