@@ -4,6 +4,7 @@ using AuthService.Repositories;
 using AuthService.UseCases;
 using Microsoft.Extensions.Options;
 using AuthService.Settings;
+using AuthService.Providers.Mail.MailTrap;
 
 namespace AuthService.Extensions.InjectDependencies
 {
@@ -12,6 +13,8 @@ namespace AuthService.Extensions.InjectDependencies
         public static IServiceCollection AddSetting(this IServiceCollection services, IConfiguration config)
         {
             services.GetSetting<AuthSetting>(config);
+            services.GetSetting<MailTrapSetting>(config);
+
             return services;
         }
 
@@ -31,5 +34,19 @@ namespace AuthService.Extensions.InjectDependencies
 
             return (T)setting;
         }
+
+        public static IOptions<T> GetSettingIOptions<T>(this IConfiguration config) where T : class
+        {
+            var setting = Activator.CreateInstance(typeof(T));
+            if (setting == null)
+                throw new Exception($"Não foi possivel criar a instancia tipo {typeof(T).FullName} para obter a sua configuração");
+
+            var section = config.GetSection(typeof(T).Name);
+            var configOption = new ConfigureFromConfigurationOptions<T>(section);
+            configOption.Configure((T)setting);
+
+            return Options.Create<T>((T)setting);
+        }
     }
 }
+

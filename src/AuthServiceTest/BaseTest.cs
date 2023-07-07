@@ -8,6 +8,7 @@ namespace AuthServiceTest.UseCase
     public abstract class BaseTest
     {
         protected IConfiguration _config { get; private set; }
+        protected ServiceCollection _services { get; private set; }
         [SetUp]
         public virtual void Setup()
         {
@@ -17,15 +18,19 @@ namespace AuthServiceTest.UseCase
                 .AddEnvironmentVariables();
 
             _config = builder.Build();
-
-            var services = new ServiceCollection();
-            services.AddScoped<RegisterFluentDapper>();
-            services.AddLogging(loggingBuilder => loggingBuilder.AddNLog("nlog.config"));
-            var provider = services.BuildServiceProvider();
-
+            _services = new ServiceCollection();
+            var provider = LoadServices().BuildServiceProvider();
 
             var fluentMapper = provider.GetService<RegisterFluentDapper>();
             if (fluentMapper != null) fluentMapper.Register();
+        }
+
+        public virtual ServiceCollection LoadServices() 
+        {
+            _services.AddScoped<RegisterFluentDapper>();
+            _services.AddLogging(loggingBuilder => loggingBuilder.AddNLog("nlog.config"));
+
+            return _services;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Org.BouncyCastle.Utilities.Encoders;
+﻿using AuthService.Domain.Models.Enums;
+using Org.BouncyCastle.Utilities.Encoders;
 using System.Collections;
 using System.ComponentModel;
 
@@ -51,12 +52,5 @@ namespace AuthService.UseCases
     {
         public StatusDto Status { get; set; }
         public dynamic? Data { get; set; }
-    }
-
-    public enum StatusDto
-    {
-        Invalid = -1,
-        Error = 0,
-        Success = 1,
     }
 }

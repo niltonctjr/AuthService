@@ -1,4 +1,6 @@
-﻿using AuthService.Repositories;
+﻿using AuthService.Providers.Mail;
+using AuthService.Providers.Mail.MailTrap;
+using AuthService.Repositories;
 using AuthService.Repositories.Interface;
 
 namespace AuthService.Extensions.InjectDependencies
@@ -8,7 +10,7 @@ namespace AuthService.Extensions.InjectDependencies
         public static IServiceCollection AddRepositoriesAndProviders(this IServiceCollection services)
         {
             #region providers
-
+            services.AddTransient<IMailProvider, MailTrapProvider>();
 
             #endregion
 

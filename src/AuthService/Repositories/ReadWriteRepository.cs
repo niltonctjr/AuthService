@@ -4,6 +4,7 @@ using AuthService.Domain.Models.Enums;
 using AuthService.Repositories.Contexts;
 using AuthService.Repositories.Customs.Dommel;
 using AuthService.Domain.Models;
+using System.ComponentModel;
 
 namespace AuthService.Repositories
 {
@@ -37,6 +38,16 @@ namespace AuthService.Repositories
             conn.InsertCustom(model));
         public virtual void Alter(T model) => OpenConnection(conn =>
         {
+            if (model.ModifiedBy != null)
+            {
+                model.ModifiedById = model.ModifiedBy.Id;
+            }
+
+
+            if (model.ModifiedById == null || model.ModifiedById == Guid.Empty)
+                throw new WarningException("Não informado usuario de modificação");
+
+            model.ModifiedAt = DateTime.Now;
             return conn.Update(model);
         });
         public virtual void Delete(Guid id)

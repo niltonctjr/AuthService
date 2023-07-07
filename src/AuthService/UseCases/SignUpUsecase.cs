@@ -1,5 +1,6 @@
 ﻿using AuthService.Domain.Models;
 using AuthService.Domain.Utils.Cryptography;
+using AuthService.Providers.Mail;
 using AuthService.Repositories.Interface;
 using System.ComponentModel;
 
@@ -8,9 +9,12 @@ namespace AuthService.UseCases
     public class SignUpUsecase : BaseUsecase<SignUpDto>
     {
         private readonly IUserRepository _rep;
-        public SignUpUsecase(IUserRepository rep)
+        private readonly IMailProvider _mailProvider;
+
+        public SignUpUsecase(IUserRepository rep, IMailProvider mailProvider)
         {
             _rep = rep;
+            _mailProvider = mailProvider;
         }
 
         public override bool IsValid(Actor actor, SignUpDto dto)
@@ -45,6 +49,14 @@ namespace AuthService.UseCases
             _rep.Create(model);
 
             model = _rep.Get(model.Id);
+
+            _mailProvider.Emit(new MailProviderModel()
+            {
+                From = new string[] { "no-reply@authservice.com" },
+                To = new string[] { model.Email },
+                Subject = "Sua inscrição foi realizada com sucesso",
+                Body = "Sua inscrição foi realizada com sucesso, <a href=''>Clique aqui</a> para validar seu e-mail"
+            });
 
             return Task.FromResult<dynamic>( new {
                 model.Id, 

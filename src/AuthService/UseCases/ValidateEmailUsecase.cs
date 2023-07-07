@@ -8,37 +8,27 @@ using System.ComponentModel;
 
 namespace AuthService.UseCases
 {
-    public class SignInUsecase : BaseUsecase<SignInDto>
+    public class ValidateEmailUsecase : BaseUsecase<ValidateEmailDto>
     {
         private readonly IUserRepository _rep;
         private readonly AuthSetting _authSetting;
-        public SignInUsecase(IUserRepository rep, IOptions<AuthSetting> authSetting)
+        public ValidateEmailUsecase(IUserRepository rep)
         {
             _rep = rep;
-            _authSetting = authSetting.Value;
         }
 
-        public override bool IsValid(Actor actor, SignInDto dto)
+        public override bool IsValid(Actor actor, ValidateEmailDto dto)
         {
             if (actor == null)
                 throw new WarningException("Ator não informado");
 
-            if (string.IsNullOrEmpty(dto.Email))
-                throw new WarningException("Email não informado");
-
-            if (string.IsNullOrEmpty(dto.Password))
-                throw new WarningException("Password não informado");
-
-            var user = _rep.GetByEmail(dto.Email).FirstOrDefault();
-            if (user == null || (user.Password != dto.Password.Encryp()))
-            {
-                throw new WarningException("Falha ao entrar, usuario ou senha não encontrado");
-            }
+            if (string.IsNullOrEmpty(dto.Token))
+                throw new WarningException("Token não informado");
 
             return true;
         }
 
-        public override Task<dynamic> Run(Actor actor, SignInDto dto)
+        public override Task<dynamic> Run(Actor actor, ValidateEmailDto dto)
         {
             var user = _rep.GetByEmail(dto.Email).First();            
             var token = Token.Generate(_authSetting, user);
@@ -55,9 +45,8 @@ namespace AuthService.UseCases
         }
     }
 
-    public class SignInDto
+    public class ValidateEmailDto
     {
-        public string Email { get; set; } = "";
-        public string Password { get; set; } = "";
+        public string Token { get; set; } = "";
     }
 }
