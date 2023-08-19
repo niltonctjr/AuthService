@@ -5,7 +5,7 @@ namespace AuthService.Domain.Models
 {
     public abstract class BaseModel
     {
-        private readonly UniqueIdentifyProvider _uid;        
+        private readonly UniqueIdentifyProvider _uid;
         public Guid Id { get; set; }
         public StateGeneric State { get; set; }
         public DateTime CreatedAt { get; set; }
@@ -19,7 +19,7 @@ namespace AuthService.Domain.Models
         {
             _uid = new UniqueIdentifyProvider();
             Id = id;
-            CreatedAt = _uid.GetDate(Id);            
+            CreatedAt = _uid.GetDate(Id);
         }
         public BaseModel()
         {

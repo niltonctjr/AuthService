@@ -1,5 +1,4 @@
 ﻿using AuthService.Domain.Models.Enums;
-using AuthService.UseCases;
 
 namespace AuthService.Providers.Mail
 {

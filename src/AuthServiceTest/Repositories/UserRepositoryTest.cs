@@ -38,11 +38,12 @@ namespace AuthServiceTest.Repositories
         }
         [Test]
         [Order(1)]
-        public void Create() 
-        {            
+        public void Create()
+        {
             var encrypPass = "123".Encryp();
 
-            var model = new UserModel(){
+            var model = new UserModel()
+            {
                 Email = _username,
                 Password = encrypPass,
                 CreatedById = _idAdmin,
@@ -61,18 +62,20 @@ namespace AuthServiceTest.Repositories
 
             var old = _rep.GetAll().Last();
             old.Password = encrypPass;
+            old.ModifiedById = _idAdmin;
 
             _rep.Alter(old);
             var result = _rep.Get(old.Id);
 
             Assert.That(result?.Password, Is.EqualTo(encrypPass));
-            
+
         }
         [Test]
         [Order(2)]
         public void Disable()
         {
             var old = _rep.GetAll().Last();
+            old.ModifiedById = _idAdmin;
             _rep.Disable(old.Id);
             var result = _rep.Get(old.Id);
 
@@ -83,6 +86,7 @@ namespace AuthServiceTest.Repositories
         public void Enable()
         {
             var old = _rep.GetAll().Last();
+            old.ModifiedById = _idAdmin;
             _rep.Enable(old.Id);
             var result = _rep.Get(old.Id);
 
@@ -95,7 +99,7 @@ namespace AuthServiceTest.Repositories
         {
             var result = _rep.GetByEmail("admin@authservice.com");
 
-            if(result!= null && result.Any())
+            if (result != null && result.Any())
                 _idAdmin = result.First().Id;
 
             Assert.That(result, Is.Not.Empty);

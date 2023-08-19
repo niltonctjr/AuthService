@@ -10,15 +10,15 @@ namespace AuthService.Migration.Extensions
 {
     public static class MigrationExtension
     {
-        public static IServiceCollection AddMigration(this IServiceCollection services, IConfiguration configuration) 
+        public static IServiceCollection AddMigration(this IServiceCollection services, IConfiguration configuration)
         {
             var assembly = Assembly.GetExecutingAssembly().GetTypes()
-                .Where(t=> typeof(FluentMigrator.Migration) == t.BaseType)
-                .Select(t=> t.Assembly).ToArray();
+                .Where(t => typeof(FluentMigrator.Migration) == t.BaseType)
+                .Select(t => t.Assembly).ToArray();
 
             services.AddFluentMigratorCore()
                 .ConfigureRunner(cfg => cfg
-                    .AddSqlServer()
+                    .AddPostgres()
                 .WithGlobalConnectionString(configuration.GetConnectionString("AuthService"))
                     .ScanIn(assembly).For.Migrations()
                 )

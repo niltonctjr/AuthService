@@ -5,11 +5,12 @@ namespace AuthService.Repositories.Mappers
 {
     internal class UserMap : BaseMap<UserModel>
     {
-        internal UserMap(): base()
+        internal UserMap() : base()
         {
-            ToTable("users");            
+            ToTable("users");
             Map(e => e.Email).ToColumn("email");
             Map(e => e.Password).ToColumn("password");
+            Map(e => e.IsValid).ToColumn("is_valid");
         }
     }
 }

@@ -9,8 +9,10 @@ namespace AuthService.Extensions.InjectDependencies
         {
 
             services.AddHealthChecks()
-                .AddSqlServer($"{configuration.GetConnectionString("AuthService")}",
+                .AddNpgSql($"{configuration.GetConnectionString("AuthService")}",
                     name: "DataBase AuthService", tags: new string[] { "db", "data", "sql" });
+            // .AddSqlServer($"{configuration.GetConnectionString("AuthService")}",
+            //     name: "DataBase AuthService", tags: new string[] { "db", "data", "sql" });
 
             services.AddHealthChecksUI(options =>
             {

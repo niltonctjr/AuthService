@@ -30,7 +30,7 @@ namespace AuthService.Extensions
         public static string EncodeTokenMail(AuthSetting authSetting, UserModel user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.UTF8.GetBytes(authSetting.SecretKey);
+            var key = Encoding.UTF8.GetBytes(authSetting.SecretKeyEmailToken);
 
             var desc = new SecurityTokenDescriptor
             {
@@ -45,22 +45,22 @@ namespace AuthService.Extensions
             return tokenHandler.WriteToken(token);
         }
 
-        public static UserModel DecodeTokenMail(AuthSetting authSetting, string token)
-        {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.UTF8.GetBytes(authSetting.SecretKey);
+        // public static UserModel DecodeTokenMail(AuthSetting authSetting, string token)
+        // {
+        //     var tokenHandler = new JwtSecurityTokenHandler();
+        //     var key = Encoding.UTF8.GetBytes(authSetting.SecretKey);
 
-            var validations = new TokenValidationParameters
-            {
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(key),
-                ValidateIssuer = false,
-                ValidateAudience = false
-            };
-            var claimsPrincipal = tokenHandler.ValidateToken(token, validations, out var validatedToken);
-            //var token = tokenHandler.CreateToken(desc);
-            //return tokenHandler.WriteToken(token);
-        }
+        //     var validations = new TokenValidationParameters
+        //     {
+        //         ValidateIssuerSigningKey = true,
+        //         IssuerSigningKey = new SymmetricSecurityKey(key),
+        //         ValidateIssuer = false,
+        //         ValidateAudience = false
+        //     };
+        //     var claimsPrincipal = tokenHandler.ValidateToken(token, validations, out var validatedToken);
+        //     //var token = tokenHandler.CreateToken(desc);
+        //     //return tokenHandler.WriteToken(token);
+        // }
 
         public static ClaimsIdentity ToClaim(this UserModel user)
         {
@@ -75,7 +75,13 @@ namespace AuthService.Extensions
 
         public static UserModel ToUser(this ClaimsPrincipal claimsPrincipal)
         {
-            
+            var id = claimsPrincipal.Claims.Where(c => c.ValueType == ClaimTypes.NameIdentifier).First().Value;
+            var email = claimsPrincipal.Claims.Where(c => c.ValueType == ClaimTypes.Name).First().Value;
+
+            return new UserModel(new Guid(id))
+            {
+                Email = email,
+            };
         }
     }
 }

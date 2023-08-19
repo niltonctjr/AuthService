@@ -24,7 +24,8 @@ try
         c.SwaggerDoc("v1", new OpenApiInfo { Title = "HealthCheck", Version = "v1" });
     });
 
-    builder.Host.ConfigureLogging(logging => {
+    builder.Host.ConfigureLogging(logging =>
+    {
         logging.ClearProviders();
         logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
         logging.AddConsole();

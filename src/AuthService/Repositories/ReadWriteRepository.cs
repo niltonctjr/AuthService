@@ -43,7 +43,6 @@ namespace AuthService.Repositories
                 model.ModifiedById = model.ModifiedBy.Id;
             }
 
-
             if (model.ModifiedById == null || model.ModifiedById == Guid.Empty)
                 throw new WarningException("Não informado usuario de modificação");
 
@@ -59,7 +58,7 @@ namespace AuthService.Repositories
             OpenConnection(conn => conn.Delete(model));
         }
         public virtual void Disable(Guid id) => ChangeState(StateGeneric.Inactive, id);
-        public virtual void Enable(Guid id) => ChangeState(StateGeneric.Active, id);        
+        public virtual void Enable(Guid id) => ChangeState(StateGeneric.Active, id);
 
     }
 }
