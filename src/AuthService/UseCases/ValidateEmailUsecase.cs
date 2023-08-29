@@ -12,9 +12,10 @@ namespace AuthService.UseCases
     {
         private readonly IUserRepository _rep;
         private readonly AuthSetting _authSetting;
-        public ValidateEmailUsecase(IUserRepository rep)
+        public ValidateEmailUsecase(IUserRepository rep, IOptions<AuthSetting> authSetting)
         {
             _rep = rep;
+            _authSetting = authSetting.Value;
         }
 
         public override bool IsValid(Actor actor, ValidateEmailDto dto)
@@ -30,19 +31,18 @@ namespace AuthService.UseCases
 
         public override Task<dynamic> Run(Actor actor, ValidateEmailDto dto)
         {
-            var user = _rep.GetByEmail(dto.Email).First();
-            var token = Token.Generate(_authSetting, user);
+            var user = Token.DecodeTokenMail(_authSetting, dto.Token);
+            user = _rep.Get(user.Id);
+            if (user == null)
+                throw new WarningException("User não encontrado");
+
+            user.IsValid = true;
+            user.ModifiedById = new Guid(actor.Id);
+            _rep.Alter(user);
 
             return Task.FromResult<dynamic>(new
             {
-                token,
-                user = new
-                {
-                    user.Id,
-                    user.Email,
-                    user.CreatedAt,
-                    user.ModifiedAt,
-                }
+                Ok = true
             });
         }
     }

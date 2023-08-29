@@ -1,5 +1,4 @@
-﻿using AuthService.Domain.Models;
-using AuthService.Domain.Utils.Cryptography;
+﻿using AuthService.Domain.Utils.Cryptography;
 using AuthService.Extensions;
 using AuthService.Repositories.Interface;
 using AuthService.Settings;
@@ -40,12 +39,14 @@ namespace AuthService.UseCases
 
         public override Task<dynamic> Run(Actor actor, SignInDto dto)
         {
-            var user = _rep.GetByEmail(dto.Email).First();            
+            var user = _rep.GetByEmail(dto.Email).First();
             var token = Token.Generate(_authSetting, user);
 
-            return Task.FromResult<dynamic>(new {
+            return Task.FromResult<dynamic>(new
+            {
                 token,
-                user = new {
+                user = new
+                {
                     user.Id,
                     user.Email,
                     user.CreatedAt,

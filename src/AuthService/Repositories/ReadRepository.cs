@@ -31,10 +31,11 @@ namespace AuthService.Repositories
                 return func(conn);
             }
         }
-        
+
         public virtual T? Get(Guid id) => OpenConnection(conn => conn.Get<T>(id));
 
-        public virtual IEnumerable<T> GetAll(Expression<Func<T, bool>>? predicate = null) => OpenConnection(conn => {
+        public virtual IEnumerable<T> GetAll(Expression<Func<T, bool>>? predicate = null) => OpenConnection(conn =>
+        {
 
             if (predicate == null)
                 return conn.GetAll<T>();
