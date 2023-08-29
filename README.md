@@ -7,16 +7,15 @@ Partindo deste ponto esta aplicação é um serviço de autenticação e autoriz
 ---
 ### 🛠️ Lista de ToDo: 
 * ☑️ Use case de sign-up;
-* 🚧 Use case de sign-in;
+* ☑️ Use case de sign-in;
+* ☑️ Use case de validar email;
 * 🟦 Action de sign-up;
 * 🟦 Action de sign-in;
-* 🟦 Envio de e-email em processo de sign-up;
+* ☑️ Envio de e-email em processo de sign-up;
 * 🟦 Tabela de sessão;
 * 🚧 Teste unitarios em todos os use case;
+* 🟦 Implementação de desing patten strategy;
 
 ---
 ### 💾 Esta aplicação suporta ser acomplada as base de dados:
-* ☑️ SqlServer
-* 🟦 PostgrSql
-* 🟦 mySql
-* 🟦 Oracle
+* ☑️ PostgrSql
